@@ -5,6 +5,12 @@
         <meta charset="utf-8">
         <title> Revision Tracker </title>
         <link rel="stylesheet" type="text/css" href="styles.css"/>
+        
+        <script>
+            window.onload = function() {document.getElementById("plusButton").onclick = function() {
+            document.getElementById("Add Session").style.display = "block";}; }
+        </script>
+    
     </head>
     <body> 
         <nav>
@@ -17,6 +23,18 @@
         <h3>Study History</h3>
         <p>Your History is Empty</p>
 
-        <button> + </button>
+        <button id="plusButton"> + </button>
+    
+        <form id="Add Session" style="display:none;">
+            Topic: <input type="text" name="topic" placeholder="Topic Name" size="20">
+
+            <br>
+            Date: <input type="date" name="date" placeholder="Date of Session" size="20">
+            <br>
+
+            <input type="submit" name="submit" value="Add Session">
+            <input type="reset" name="reset" value="Clear">
+            
+        </form>
 
     </body>
