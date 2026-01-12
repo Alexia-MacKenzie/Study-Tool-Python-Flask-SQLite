@@ -29,6 +29,7 @@
                 <th>End Time</th>
                 <th>Duration</th>
                 <th>Topic</th>
+                <th>Delete</th>
             </tr>
 
             {% for session in view_sessions %}
@@ -39,6 +40,13 @@
                 <td>{{ session[3] }}</td>
                 <td>{{ session[4] }}</td>
                 <td>{{ session[5] }}</td>
+                <td>
+                    <form action="{{ url_for('delete_record') }}" method="post" style="display:inline;">
+                            <input type="hidden" name="record_id" value="{{ session[0] }}">
+                            <input type="hidden" name="table_name" value=completed_session">
+                            <button type="submit">Delete</button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </table>
@@ -57,7 +65,13 @@
                 <td>{{ session[0] }}</td>
                 <td>{{ session[1] }}</td>
                 <td>{{ session[2] }}</td>
-                <td><button>Edit</button><button>Delete</button></td>
+                <td>
+                        <form action="{{ url_for('delete_record') }}" method="post" style="display:inline;">
+                            <input type="hidden" name="record_id" value="{{ session[0] }}">
+                            <input type="hidden" name="table_name" value="planned_session">
+                            <button type="submit">Delete</button>
+                        </form>
+                </td>
             </tr>
             {% endfor %}
         </table>

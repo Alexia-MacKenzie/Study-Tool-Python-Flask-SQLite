@@ -21,7 +21,6 @@ CREATE TABLE IF NOT EXISTS completed_session (
           duration TEXT NOT NULL,
           topic TEXT) ''')
 
-c.execute("DELETE FROM completed_session")
 
 
 
@@ -47,13 +46,12 @@ def view():
     connect.close()
     return render_template("view_sessions.html", view_sessions=view_sessions, planned_sessions = planned_sessions)
 
-@app.route("/view")
+@app.route("/run")
 def run():
     return render_template("run_sessions.html")
 
 @app.route("/view", methods=["POST", "GET"])
 def saveDetails():
-    msg="msg"
     if request.method == "POST":
         try:
             topic = request.form.get("topic")
@@ -66,6 +64,22 @@ def saveDetails():
         except Exception as e:
             return f"Databse error: {e}"
     return render_template("view_sessions.html")
+
+@app.route("/delete", methods=["POST", "GET"])
+def delete_record():
+    if request.method == "POST":
+        record = request.form['record_id']
+        table = request.form['table_name']
+        with sqlite3.connect("database.db") as connect:
+            c = connect.cursor()
+            if table == "planned_session":
+                c.execute("DELETE FROM planned_session WHERE id = ?", (record,))
+            else: 
+                c.execute("DELETE FROM completed_session WHERE id = ?", (record,))
+            connect.commit()
+        return redirect("/view")
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
