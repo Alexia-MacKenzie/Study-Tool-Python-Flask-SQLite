@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, render_template, g
+from flask import Flask, render_template, g, request, redirect
 
 app = Flask(__name__)
 
@@ -47,9 +47,25 @@ def view():
     connect.close()
     return render_template("view_sessions.html", view_sessions=view_sessions, planned_sessions = planned_sessions)
 
-@app.route("/run")
+@app.route("/view")
 def run():
     return render_template("run_sessions.html")
+
+@app.route("/view", methods=["POST", "GET"])
+def saveDetails():
+    msg="msg"
+    if request.method == "POST":
+        try:
+            topic = request.form.get("topic")
+            date = request.form.get("date")
+            with sqlite3.connect("database.db") as connect:
+                c = connect.cursor()
+                c.execute("INSERT INTO planned_session (date, topic) VALUES (?, ?)", (date,topic))
+                connect.commit()
+            return redirect("/view")
+        except Exception as e:
+            return f"Databse error: {e}"
+    return render_template("view_sessions.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

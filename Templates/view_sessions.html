@@ -49,6 +49,7 @@
                 <th>ID</th>
                 <th>Date</th>
                 <th>Topic</th>
+                <th>Update</th>
             </tr>
 
             {% for session in planned_sessions %}
@@ -56,6 +57,7 @@
                 <td>{{ session[0] }}</td>
                 <td>{{ session[1] }}</td>
                 <td>{{ session[2] }}</td>
+                <td><button>Edit</button><button>Delete</button></td>
             </tr>
             {% endfor %}
         </table>
