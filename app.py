@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS completed_session (
           duration TEXT NOT NULL,
           topic TEXT) ''')
 
+c.execute("DELETE FROM completed_session")
 
 
 
