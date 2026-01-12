@@ -21,21 +21,11 @@ CREATE TABLE IF NOT EXISTS completed_session (
           duration TEXT NOT NULL,
           topic TEXT) ''')
 
+
+
+
 connect.commit()
 connect.close()
-
-#Database functions
-def get_db():
-    db = getattr(g, '_database', None)
-    if db is None:
-        db = g._database = sqlite3.connect(DATABASE)
-    return db
-
-@app.teardown_appcontext
-def close_connection(exception):
-    db = getattr(g, '_database', None)
-    if db is not None:
-        db.close()
 
 
 #Nav functions
@@ -46,7 +36,15 @@ def home():
 
 @app.route("/view")
 def view():
-    return render_template("view_sessions.html")
+    connect = sqlite3.connect('database.db')
+    c = connect.cursor()
+    c.execute('SELECT * FROM completed_session')
+    view_sessions = c.fetchall()
+
+    c.execute('SELECT * FROM planned_session')
+    planned_sessions = c.fetchall()
+    connect.close()
+    return render_template("view_sessions.html", view_sessions=view_sessions, planned_sessions = planned_sessions)
 
 @app.route("/run")
 def run():

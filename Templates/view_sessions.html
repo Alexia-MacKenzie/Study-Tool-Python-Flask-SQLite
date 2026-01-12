@@ -21,11 +21,49 @@
 
 
         <h3>Study History</h3>
-        <p>Your History is Empty</p>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Duration</th>
+                <th>Topic</th>
+            </tr>
+
+            {% for session in view_sessions %}
+            <tr>
+                <td>{{ session[0] }}</td>
+                <td>{{ session[1] }}</td>
+                <td>{{ session[2] }}</td>
+                <td>{{ session[3] }}</td>
+                <td>{{ session[4] }}</td>
+                <td>{{ session[5] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+       
+        <h3>Planned Sessions</h3>
+                <table>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Topic</th>
+            </tr>
+
+            {% for session in planned_sessions %}
+            <tr>
+                <td>{{ session[0] }}</td>
+                <td>{{ session[1] }}</td>
+                <td>{{ session[2] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
 
         <button id="plusButton"> + </button>
     
-        <form id="Add Session" style="display:none;">
+        <form id="Add Session" style="display:none;" method="POST">
             Topic: <input type="text" name="topic" placeholder="Topic Name" size="20">
 
             <br>
