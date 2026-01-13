@@ -14,6 +14,13 @@
         </nav>
 
         <h3>Focus Timer</h3>
+            <form action="{{ url_for('start_session') }}" method="post" style="display:inline;">
+                <button type="submit">Start Session</button>
+            </form>
+
+            <form action="{{ url_for('end_session') }}" method="post" style="display:inline;">
+                <button type="submit">Finish Session</button>
+            </form>
         <p> 0 minutes</p>
 
     </body>

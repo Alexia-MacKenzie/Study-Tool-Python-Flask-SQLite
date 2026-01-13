@@ -1,5 +1,7 @@
 import sqlite3
+import time
 from flask import Flask, render_template, g, request, redirect
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -49,6 +51,45 @@ def view():
 @app.route("/run")
 def run():
     return render_template("run_sessions.html")
+
+@app.route("/start_session", methods=["POST"])
+def start_session():
+    start_time = datetime.now().strftime("%H:%M:%S")
+    session_date = datetime.now().strftime("%d/%m/%Y")
+    connect = sqlite3.connect('database.db')
+    c = connect.cursor()
+    c.execute('INSERT INTO completed_session (date, start_time, end_time, duration) VALUES (?, ?, ?, ?)', (session_date, start_time, "TBD", "TBD"))
+    connect.commit()
+    connect.close()
+    return redirect("/run")
+
+@app.route("/end_session", methods=["POST"])
+def end_session():
+    end_time = datetime.now().strftime("%H:%M:%S")
+    connect = sqlite3.connect('database.db')
+    c = connect.cursor()
+    c.execute('SELECT start_time FROM completed_session WHERE end_time = "TBD"')
+    start_time = c.fetchone()       
+    if start_time is None:
+        connect.close()
+        return "No active session found", 400
+    
+    start_time_str = start_time[0]
+    
+    start_time_dt = datetime.strptime(start_time_str, "%H:%M:%S")
+    end_time_dt = datetime.strptime(end_time, "%H:%M:%S")
+    delta = end_time_dt - start_time_dt
+
+    hours, remainder = divmod(int(delta.total_seconds()), 3600)
+    minutes, seconds = divmod(remainder, 60)
+    duration = f"{hours:02}:{minutes:02}:{seconds:02}"
+
+    c.execute('UPDATE completed_session SET (end_time, duration) = (?, ?) WHERE end_time = "TBD"', (end_time, duration,))
+    connect.commit()
+    connect.close()
+    return redirect("/view")
+
+
 
 @app.route("/view", methods=["POST", "GET"])
 def saveDetails():
