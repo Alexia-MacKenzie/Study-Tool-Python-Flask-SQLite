@@ -2,6 +2,8 @@ import sqlite3
 import time
 from flask import Flask, render_template, g, request, redirect, jsonify
 from datetime import datetime, timedelta
+import matplotlib.pyplot as plt
+import mpld3
 
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
@@ -33,6 +35,31 @@ connect.close()
 @app.route("/")
 def home():
     return render_template("home.html")
+
+@app.route("/graph")
+def plot_graph():
+    connect = sqlite3.connect('database.db')
+    c = connect.cursor()
+    c.execute('SELECT date, SUM(duration) as total_duration FROM completed_session GROUP BY date ORDER BY date')
+    result = c.fetchall()
+    dates = []
+    duration = []
+
+    for i in result:
+        dates.append(i[0])
+        duration.append(i[1])
+    
+    plt.bar(dates, duration)
+    plt.title('Duration per Date')
+    plt.xlabel('Date')
+    plt.ylabel('Hours of study')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
+
+    connect.close()
+
+
 
 
 @app.route("/view")
