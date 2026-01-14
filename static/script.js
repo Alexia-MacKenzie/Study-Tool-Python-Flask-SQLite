@@ -15,7 +15,8 @@ function updateProgress() {
 }
 
 
-setInterval(updateProgress, 1000);
+setInterval(updateProgress, 60000);
 
 
 updateProgress();
+
