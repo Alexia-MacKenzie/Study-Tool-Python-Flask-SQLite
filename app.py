@@ -68,6 +68,9 @@ def start_session():
     c = connect.cursor()
     c.execute('INSERT INTO completed_session (date, start_time, end_time, duration) VALUES (?, ?, ?, ?)', (session_date, start_time, "TBD", duration))
     connect.commit()
+    if topic != "":
+        c.execute('UPDATE completed_session SET (topic) = (?) WHERE end_time = "TBD"', (topic,))
+        connect.commit()
     connect.close()
     return redirect("/run")
 
