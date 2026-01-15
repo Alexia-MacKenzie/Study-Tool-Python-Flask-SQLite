@@ -34,7 +34,8 @@ connect.close()
 #Nav functions
 @app.route("/")
 def home():
-    return render_template("home.html")
+    chart = plot_graph()
+    return render_template("home.html", chart=chart)
 
 @app.route("/graph")
 def plot_graph():
@@ -49,15 +50,20 @@ def plot_graph():
         dates.append(i[0])
         duration.append(i[1])
     
-    plt.bar(dates, duration)
-    plt.title('Duration per Date')
-    plt.xlabel('Date')
-    plt.ylabel('Hours of study')
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-    plt.show()
-
+    fig, ax = plt.subplots()
+    
+    ax.bar(dates, duration)
+    ax.set_title('Duration per Date')
+    ax.set_xlabel('Date')
+    ax.set_ylabel('Hours of study')
+    ax.tick_params(axis='x', rotation=45)
+    fig.tight_layout()
+    figure = mpld3.fig_to_html(fig)
     connect.close()
+    return render_template("home.html", chart=figure)
+
+
+    
 
 
 
