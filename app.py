@@ -2,8 +2,12 @@ import sqlite3
 import time
 from flask import Flask, render_template, g, request, redirect, jsonify
 from datetime import datetime, timedelta
+import matplotlib
+matplotlib.use("Agg")  # non-GUI backend
+import matplotlib.pyplot as plt
 import matplotlib.pyplot as plt
 import mpld3
+import numpy as np
 
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
@@ -37,30 +41,42 @@ def home():
     chart = plot_graph()
     return render_template("home.html", chart=chart)
 
-@app.route("/graph")
+
 def plot_graph():
     connect = sqlite3.connect('database.db')
     c = connect.cursor()
-    c.execute('SELECT date, SUM(duration) as total_duration FROM completed_session GROUP BY date ORDER BY date')
+    c.execute('SELECT date, SUM( CAST(SUBSTR(duration,1,2) AS INTEGER) * 3600 +  CAST(SUBSTR(duration,4,2) AS INTEGER) * 60 +   CAST(SUBSTR(duration,7,2) AS INTEGER)) AS total_seconds FROM completed_session WHERE date(date) >= date("now", "-7 days") GROUP BY date ORDER BY date')
     result = c.fetchall()
+    print(result)
     dates = []
     duration = []
 
     for i in result:
         dates.append(i[0])
-        duration.append(i[1])
+        duration.append(i[1] / 3600)
     
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(10, 6))
     
-    ax.bar(dates, duration)
-    ax.set_title('Duration per Date')
-    ax.set_xlabel('Date')
-    ax.set_ylabel('Hours of study')
-    ax.tick_params(axis='x', rotation=45)
+
+    x_positions = np.arange(len(dates))
+    
+
+    bars = ax.bar(x_positions, duration, color='#3498db', edgecolor='navy', alpha=0.8)
+    
+ 
+    ax.set_xticks(x_positions)
+    ax.set_xticklabels(dates, rotation=45)
+    
+ 
+    ax.set_title('Study Hours per Day', fontsize=14)
+    ax.set_xlabel('Date', fontweight='bold')
+    ax.set_ylabel('Hours', fontweight='bold')
+    current_max = max(duration) if duration else 0
+    ax.set_ylim(0, max(1, current_max * 1.2)) # Shows at least 1 hour height
+    
     fig.tight_layout()
-    figure = mpld3.fig_to_html(fig)
     connect.close()
-    return render_template("home.html", chart=figure)
+    return mpld3.fig_to_html(fig)
 
 
     
@@ -94,7 +110,7 @@ def run():
 @app.route("/start_session", methods=["POST"])
 def start_session():
     start_time = datetime.now().strftime("%H:%M:%S")
-    session_date = datetime.now().strftime("%d/%m/%Y")
+    session_date = datetime.now().strftime("%Y-%m-%d")
     topic = request.form.get("topic")
     duration = request.form.get("duration")
     connect = sqlite3.connect('database.db')

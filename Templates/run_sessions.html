@@ -36,10 +36,6 @@
             <label>Session Progress:</label>
             <progress id="session_bar" value="0" max="1"></progress>
             <span id="progress_text">0%</span>
-
-            <p>Elapsed: {{ elapsed }}</p>
-            <p>Planned: {{ planned }}</p>
-            <p>Progress: {{ progress }}%</p>
     <script>
         const PROGRESS_URL = "{{ url_for('current_duration') }}";
     </script>
