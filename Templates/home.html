@@ -15,6 +15,16 @@
         <h1>Revision Tracker</h1>
         <h2>Plan, Track and Run Your Revision Sessions</h2>
 
+        {% if overdue_sessions %}
+        <dialog open>      
+            {% for session in overdue_sessions %}
+            {{ session[0] }} — Planned for {{ session[1] }}<br>
+            {% endfor %}
+            <form method="dialog">
+                <button>Close</button>
+            </form>
+        </dialog>
+
         <h3>Weekly Stats</h3>
         {{ chart | safe }}
 

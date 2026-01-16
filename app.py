@@ -9,10 +9,7 @@ import matplotlib.pyplot as plt
 import mpld3
 import numpy as np
 
-
 app = Flask(__name__, static_folder="static", template_folder="templates")
-
-
 
 # Database Creation
 connect = sqlite3.connect('database.db') #Connects to the database (will create it if it doesn't exits)
@@ -31,16 +28,15 @@ CREATE TABLE IF NOT EXISTS completed_session (
           end_time TEXT NOT NULL,
           duration TEXT NOT NULL,
           topic TEXT) ''')
+
+
 connect.commit()
 connect.close()
-
-
 #Nav functions
 @app.route("/")
 def home():
     chart = plot_graph()
     return render_template("home.html", chart=chart)
-
 
 def plot_graph():
     connect = sqlite3.connect('database.db')
@@ -56,13 +52,10 @@ def plot_graph():
         duration.append(i[1] / 3600)
     
     fig, ax = plt.subplots(figsize=(10, 6))
-    
 
     x_positions = np.arange(len(dates))
-    
 
     bars = ax.bar(x_positions, duration, color='#3498db', edgecolor='navy', alpha=0.8)
-    
  
     ax.set_xticks(x_positions)
     ax.set_xticklabels(dates, rotation=45)
@@ -77,11 +70,6 @@ def plot_graph():
     fig.tight_layout()
     connect.close()
     return mpld3.fig_to_html(fig)
-
-
-    
-
-
 
 
 @app.route("/view")
@@ -184,7 +172,7 @@ def saveDetails():
             date = request.form.get("date")
             with sqlite3.connect("database.db") as connect:
                 c = connect.cursor()
-                c.execute("INSERT INTO planned_session (date, topic) VALUES (?, ?)", (date,topic))
+                c.execute("INSERT INTO planned_session (date, topic, completed) VALUES (?, ?, ?)", (date,topic,False))
                 connect.commit()
             return redirect("/view")
         except Exception as e:
@@ -204,8 +192,26 @@ def delete_record():
                 c.execute("DELETE FROM completed_session WHERE id = ?", (record,))
             connect.commit()
         return redirect("/view")
+    
+@app.route("/check_session_off", methods=["POST"])
+def check_session_off():
+    if request.method == "POST":
+        record = request.form['record_id']
+        with sqlite3.connect('database.db') as connect:
+            c = connect.cursor()
+            c.execute('UPDATE planned_session SET completed = (?) WHERE id = (?)', (True, record))
+        connect.commit()
+    return redirect("/view")
 
 
+def overdue_sessions():
+    today = datetime.today()
+    connect = sqlite3.connect('database.db')
+    c = connect.cursor()
+    c.execute('SELECT topic, date from planned_session WHERE completed = (0) AND date < (?) ', (today,))
+    results = c.fetchall()
+    connect.close()
+    return results
 
 if __name__ == "__main__":
     app.run(debug=True)
