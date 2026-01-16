@@ -51,7 +51,7 @@ def plot_graph():
         dates.append(i[0])
         duration.append(i[1] / 3600)
     
-    fig, ax = plt.subplots(figsize=(10, 6))
+    fig, ax = plt.subplots(figsize=(8, 4))
 
     x_positions = np.arange(len(dates))
 

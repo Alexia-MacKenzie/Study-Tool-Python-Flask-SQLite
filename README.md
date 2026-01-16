@@ -33,11 +33,14 @@ Features:
 - View previous revision sessions
 - Run a timer during revision sessions
 - Log completed revision sessions
+- View statstics from study sessions during that week
+- Receive pop ups notifying users of overdue planned sessions
 
 
 Tech stack
 - Python
 - Flask
+- Matplotlib
 - SQLite
 - HTML / CSS
 - JavaScript
@@ -46,10 +49,11 @@ How it works (high level)
 
 Challenges and Learning
 
-For this project to work, I had to learn quite a few new skills. Firstly, I have never used virtual environments and Flask, so that was quite a steep learning curve for me. However, I have now gained quite an insight into Flask, and feel confident with the frameworks it provides. It was quite fun to experiement with Flask, and very rewarding when testing the code and discovering my functionalities worked! I also have minimal experience with HTML forms and JavaScript, so the displaying of the timer proved to be quite a difficult step in the programming process.
+For this project to work, I had to learn quite a few new skills. Firstly, I have never used virtual environments and Flask, so that was quite a steep learning curve for me. However, I have now gained quite an insight into Flask, and feel confident with the frameworks it provides. It was quite fun to experiement with Flask, and very rewarding when testing the code and discovering my functionalities worked! I also have minimal experience with HTML forms and JavaScript, so the displaying of the progress bar proved to be quite a difficult step in the programming process, taking nearly 2 days to finally work. It was quite a challenge for me to use Jinja templates, as it was something I had actually never heard of before, but I have now got the hang of using them in this project. 
 
 Future improvements
+In the future, there are quite a few additional functionalities I could include in this project. Firstly, I could make a visual timer, showing the mintes/seconds ticking down on the screen for the user. 
 
-setup instructions
+Setup instructions
 
 screenshots (optional)

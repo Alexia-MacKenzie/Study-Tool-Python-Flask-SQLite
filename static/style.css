@@ -1,0 +1,70 @@
+* {
+    font-family : Garamond, serif;
+    color : "BLACK";
+    background-color: #f0e1e1;
+}
+
+h1 {
+  font-size: xx-large;
+}
+
+table {
+  background: #fff0f5; 
+  padding: 20px;
+  border-radius: 15px;
+  max-width: 400px;
+  font-family: "Comic Sans MS", cursive, sans-serif; 
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+table tr {
+  font-weight: bold;
+  margin-top: 15px;
+  color: #ff69b4; 
+}
+
+table td {
+  margin-left: 25px;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+
+nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #b47ce6;
+}
+
+
+nav li {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  float: left;
+  background-color: #b47ce6;
+}
+
+nav a {
+    color: pink
+}
+
+nav a:hover {
+  background-color: #634063;
+}
+
+#weekly_chart {
+    float : left;
+    width: 80%;       
+    max-width: 600px; 
+    height: 400px;    
+    margin: 0 auto;
+}
+
+aside {
+    float: right
+}

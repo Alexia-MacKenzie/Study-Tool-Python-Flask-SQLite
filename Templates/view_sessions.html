@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <title> Revision Tracker </title>
-        <link rel="stylesheet" type="text/css" href="styles.css"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
         
         <script>
             window.onload = function() {document.getElementById("plusButton").onclick = function() {
