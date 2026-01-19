@@ -199,6 +199,69 @@ dialog {
 }
 
 
+progress {
+  width: 100%;
+  height: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: none;
+}
+
 .progress_bar {
-  
+  padding: 15px;
+}
+
+progress::-webkit-progress-value {
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    border-radius: 10px;
+    transition: width 0.4s ease; 
+}
+
+
+.start_button, .end_button {
+font-size: 1.1rem; /* Better than "large" for scaling */
+  font-family: sans-serif;
+  font-weight: 600;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.timer_card {
+    max-width: 450px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+input[type="number"],
+input[type="text"] {
+    width: 100%;
+    padding: 20px 15px;
+    border: 2px solid #dfe6e9;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #2d3436;
+    transition: all 0.3s ease;
+    box-sizing: border-box; 
+}
+
+input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
+}
+
+#duration_label, #topic_label {
+    display: block; /* Ensures label is on its own line */
+    margin-bottom: 8px;
+    margin-top: 8px;
+    font-weight: 500;
 }

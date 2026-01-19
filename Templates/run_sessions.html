@@ -17,28 +17,32 @@
         </ul>
         </nav>
 
+        <div class="timer_card">
         <h1>Focus Timer</h1>
 
 
                     
             <form id="start_form" action="{{ url_for('start_session') }}" method="post" style="display:inline;">
-                <label for="duration">Planned Duration (minutes):</label>
+                <label id="duration_label" for="duration">Planned Duration (minutes):</label>
                 <input type="number" name="duration" id="duration" min="1" required>
 
-                <label for="topic">Topic:</label>
-                <input type="text" name="topic" id="topic" placeholder="e.g., Math Chapter 1">
+                <label id="topic_label" for="topic">Topic:</label>
+                <input type="text" name="topic" id="topic" placeholder="e.g., Maths Chapter 1">
 
-                <button type="submit">Start Session</button>
             </form>
 
-            <form id="end_form" action="{{ url_for('end_session') }}" method="post" style="display:inline;">
-                <button type="submit">Finish Session</button>
-            </form>
+            <form id="end_form" action="{{ url_for('end_session') }}" method="post" style="display:inline;"></form>
+        </div>
 
             <div class="progress_bar">
-            <label>Session Progress:</label>
+            <h2>Session Progress:</h2>
             <progress id="session_bar" value="0" max="1"></progress>
             <span id="progress_text">0%</span>
+            </div>
+
+            <div class="controls">
+                <button type="submit" form="start_form" class="start_button">Start Session</button>
+                <button type="submit" form="end_form" class="end_button">Finish Session</button>
             </div>
     <script>
         const PROGRESS_URL = "{{ url_for('current_duration') }}";
