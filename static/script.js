@@ -1,5 +1,3 @@
-console.log("JS loaded")
-
 function updateProgress() {
     fetch(PROGRESS_URL)
         .then(response => response.json())
