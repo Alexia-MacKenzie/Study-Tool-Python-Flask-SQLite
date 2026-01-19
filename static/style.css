@@ -1,7 +1,7 @@
 * {
-    font-family : Garamond, serif;
+    font-family : 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color : "BLACK";
-    background-color: #f0e1e1;
+    background-color: #f8f9fa;
 }
 
 h1 {
@@ -9,7 +9,7 @@ h1 {
 }
 
 table {
-  background: #fff0f5; 
+  background: darkblue; 
   padding: 20px;
   border-radius: 15px;
   max-width: 400px;
@@ -20,7 +20,7 @@ table {
 table tr {
   font-weight: bold;
   margin-top: 15px;
-  color: #ff69b4; 
+  color: grey; 
 }
 
 table td {
@@ -63,6 +63,7 @@ nav a:hover {
     max-width: 600px; 
     height: 400px;    
     margin: 0 auto;
+    border : 2px
 }
 
 aside {

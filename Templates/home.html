@@ -17,9 +17,15 @@
         <h2>Plan, Track and Run Your Revision Sessions</h2>
         </section>
 
-        {% if overdue_sessions %}
+
+        <h3>Weekly Stats</h3>
+        <div id="weekly_chart">
+        {{ chart | safe }}
+        </div>
+
+        {% if overdue %}
         <dialog open>      
-            {% for session in overdue_sessions %}
+            {% for session in overdue %}
             {{ session[0] }} — Planned for {{ session[1] }}<br>
             {% endfor %}
             <form method="dialog">
@@ -27,11 +33,6 @@
             </form>
         </dialog>
         {% endif %}
-
-        <h3>Weekly Stats</h3>
-        <div id="weekly_chart">
-        {{ chart | safe }}
-        </div>
 
         <aside>
         <h3>Keep track of your revision, stay consistent</h3>

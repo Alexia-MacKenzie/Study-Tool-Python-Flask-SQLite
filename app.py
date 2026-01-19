@@ -35,8 +35,9 @@ connect.close()
 #Nav functions
 @app.route("/")
 def home():
+    overdue = overdue_sessions()
     chart = plot_graph()
-    return render_template("home.html", chart=chart)
+    return render_template("home.html", chart=chart, overdue=overdue)
 
 def plot_graph():
     connect = sqlite3.connect('database.db')
@@ -194,12 +195,19 @@ def delete_record():
         return redirect("/view")
     
 @app.route("/check_session_off", methods=["POST"])
-def check_session_off():
+def check_session():
     if request.method == "POST":
         record = request.form['record_id']
         with sqlite3.connect('database.db') as connect:
             c = connect.cursor()
-            c.execute('UPDATE planned_session SET completed = (?) WHERE id = (?)', (True, record))
+            c.execute('SELECT completed FROM planned_session WHERE id = (?)', (record,))
+            status = c.fetchone()
+            current_status = status[0]
+            if current_status == 0:
+                new_status = 1
+            else:
+                new_status = 0 
+            c.execute('UPDATE planned_session SET completed = (?) WHERE id = (?)', (new_status, record))
         connect.commit()
     return redirect("/view")
 

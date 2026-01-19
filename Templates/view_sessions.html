@@ -74,9 +74,9 @@
                         </form>
                 </td>
                 <td> 
-                    <form action="{{ url_for('check_session_off')}}" method="post" style="display:inline;">
+                    <form action="{{ url_for('check_session')}}" method="post" style="display:inline;">
                         <input type="hidden" name="record_id" value="{{ session[0] }}">
-                        <input type="checkbox"></input>
+                        <input type="checkbox" onchange="this.form.submit()" {% if session[3] == 1 %}checked{% endif %}></input>
                     </form>
                 </td>
             </tr>
