@@ -8,14 +8,16 @@
     </head>
     <body> 
         <nav>
+        <ul>
         <li><a href="{{ url_for('home') }}">Home</a></li>
         <li><a href="{{ url_for('view') }}">View Sessions</a></li>
         <li><a href="{{ url_for('run') }}">Run Sessions</a></li>
+        </ul>
         </nav>
-        <section id="title">
+
+
         <h1>Revision Tracker</h1>
         <h2>Plan, Track and Run Your Revision Sessions</h2>
-        </section>
 
 
         <h3>Weekly Stats</h3>
@@ -23,25 +25,42 @@
         {{ chart | safe }}
         </div>
 
-        {% if overdue %}
-        <dialog open>      
+
+        <aside>
+            <h3>Keep track of your revision, stay consistent</h3>
+            <section id="overdue_list">
+                <h4>Overdue Sessions</h4>
+                {% if overdue %}
+                <ul>
+                    {% for session in overdue %}
+                    <li>{{ session[0] }} — Planned for {{ session[1] }}</li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>You have no overdue sessions</p>
+                {% endif %}
+            </section>
+
+        </aside>    
+
+
+                {% if overdue %}
+        <dialog id="overdue_dialog" class="model" open>      
             {% for session in overdue %}
-            {{ session[0] }} — Planned for {{ session[1] }}<br>
+            <span class="dialog_text">
+            {{ session[0] }} — Planned for {{ session[1] }}</span><br>
             {% endfor %}
             <form method="dialog">
-                <button>Close</button>
+                <button id="dialog_button">Close</button>
             </form>
         </dialog>
         {% endif %}
 
-        <aside>
-        <h3>Keep track of your revision, stay consistent</h3>
-        </aside>
 
-        <footer>
-            <p> Created using python, flask, HTML & CSS</p>
-            <p>Created by Alexia MacKenzie</p>
-        </footer>
+            <footer>
+                <p> Created using python, flask, HTML & CSS</p>
+                <p>Created by Alexia MacKenzie</p>
+            </footer>
         
     </body>
 

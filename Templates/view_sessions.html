@@ -7,95 +7,110 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
         
         <script>
-            window.onload = function() {document.getElementById("plusButton").onclick = function() {
-            document.getElementById("Add Session").style.display = "block";}; }
+            window.onload = function() {document.getElementById("plus_button").onclick = function() {
+            document.getElementById("Add_Session").style.display = "block";}; }
         </script>
     
     </head>
     <body> 
         <nav>
+        <ul>
         <li><a href="{{ url_for('home') }}">Home</a></li>
         <li><a href="{{ url_for('view') }}">View Sessions</a></li>
         <li><a href="{{ url_for('run') }}">Run Sessions</a></li>
+        </ul>
         </nav>
 
+        <div class="tables_container">
+        <div class="table_wrapper">
+            <h3>Study History</h3>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Duration</th>
+                    <th>Topic</th>
+                    <th>Delete</th>
+                </tr>
 
-        <h3>Study History</h3>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Date</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th>Duration</th>
-                <th>Topic</th>
-                <th>Delete</th>
-            </tr>
-
-            {% for session in view_sessions %}
-            <tr>
-                <td>{{ session[0] }}</td>
-                <td>{{ session[1] }}</td>
-                <td>{{ session[2] }}</td>
-                <td>{{ session[3] }}</td>
-                <td>{{ session[4] }}</td>
-                <td>{{ session[5] }}</td>
-                <td>
-                    <form action="{{ url_for('delete_record') }}" method="post" style="display:inline;">
-                            <input type="hidden" name="record_id" value="{{ session[0] }}">
-                            <input type="hidden" name="table_name" value=completed_session">
-                            <button type="submit">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
-       
-        <h3>Planned Sessions</h3>
-                <table>
-            <tr>
-                <th>ID</th>
-                <th>Date</th>
-                <th>Topic</th>
-                <th>Update</th>
-                <th>Complete</th>
-            </tr>
-
-            {% for session in planned_sessions %}
-            <tr>
-                <td>{{ session[0] }}</td>
-                <td>{{ session[1] }}</td>
-                <td>{{ session[2] }}</td>
-                <td>
+                {% for session in view_sessions %}
+                <tr>
+                    <td>{{ session[0] }}</td>
+                    <td>{{ session[1] }}</td>
+                    <td>{{ session[2] }}</td>
+                    <td>{{ session[3] }}</td>
+                    <td>{{ session[4] }}</td>
+                    <td>{{ session[5] }}</td>
+                    <td>
                         <form action="{{ url_for('delete_record') }}" method="post" style="display:inline;">
-                            <input type="hidden" name="record_id" value="{{ session[0] }}">
-                            <input type="hidden" name="table_name" value="planned_session">
-                            <button type="submit">Delete</button>
+                                <input type="hidden" name="record_id" value="{{ session[0] }}">
+                                <input type="hidden" name="table_name" value=completed_session">
+                                <button type="submit">Delete</button>
                         </form>
-                </td>
-                <td> 
-                    <form action="{{ url_for('check_session')}}" method="post" style="display:inline;">
-                        <input type="hidden" name="record_id" value="{{ session[0] }}">
-                        <input type="checkbox" onchange="this.form.submit()" {% if session[3] == 1 %}checked{% endif %}></input>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            </div>
+       
+        <div class="table_wrapper">
+            <div class="column_header">
+            <h3>Planned Sessions</h3>
 
+            <div class="button_group">
+            <button id="plus_button"> + </button>
+        
+            <form id="Add_Session" style="display:none;" method="POST">
+                Topic: <input type="text" name="topic" placeholder="Topic Name" size="20">
 
-        <button id="plusButton"> + </button>
-    
-        <form id="Add Session" style="display:none;" method="POST">
-            Topic: <input type="text" name="topic" placeholder="Topic Name" size="20">
+                <br>
+                Date: <input type="date" name="date" placeholder="Date of Session" size="20">
+                <br>
 
-            <br>
-            Date: <input type="date" name="date" placeholder="Date of Session" size="20">
-            <br>
-
-            <input type="submit" name="submit" value="Add Session">
-            <input type="reset" name="reset" value="Clear">
+                <input type="submit" name="submit" value="Add Session">
+                <input type="reset" name="reset" value="Clear">
+                
+            </form>
+            </div>
             
-        </form>
+            </div>
+                <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Topic</th>
+                    <th>Update</th>
+                    <th>Complete</th>
+                </tr>
+
+                {% for session in planned_sessions %}
+                <tr>
+                    <td>{{ session[0] }}</td>
+                    <td>{{ session[1] }}</td>
+                    <td>{{ session[2] }}</td>
+                    <td>
+                            <form action="{{ url_for('delete_record') }}" method="post" style="display:inline;">
+                                <input type="hidden" name="record_id" value="{{ session[0] }}">
+                                <input type="hidden" name="table_name" value="planned_session">
+                                <button type="submit">Delete</button>
+                            </form>
+                    </td>
+                    <td> 
+                        <form action="{{ url_for('check_session')}}" method="post" style="display:inline;">
+                            <input type="hidden" name="record_id" value="{{ session[0] }}">
+                            <input type="checkbox" onchange="this.form.submit()" {% if session[3] == 1 %}checked{% endif %}></input>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+        </table>
+        </div>
+
+
+
+
+        </div>
 
     </body>

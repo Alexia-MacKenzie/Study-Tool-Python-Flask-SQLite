@@ -1,61 +1,61 @@
 * {
     font-family : 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color : "BLACK";
-    background-color: #f8f9fa;
-}
-
-h1 {
-  font-size: xx-large;
+    background-color: #ededed;
 }
 
 table {
-  background: darkblue; 
+  background: #444061; 
   padding: 20px;
   border-radius: 15px;
-  max-width: 400px;
-  font-family: "Comic Sans MS", cursive, sans-serif; 
+  max-width: 600px; 
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-table tr {
-  font-weight: bold;
-  margin-top: 15px;
-  color: grey; 
-}
 
-table td {
-  margin-left: 25px;
-  margin-bottom: 10px;
-  color: #555;
+th, td {
+    padding: 12px 15px; 
+    text-align: left;
+    border-bottom: 1px solid #eee; 
 }
-
 
 nav {
-  list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #b47ce6;
+  background-color:#444061;
+  display : block;
 }
 
+nav ul {
+    list-style-type: none; 
+    margin: 0;
+    padding: 0;
+    display: flex;  
+    background-color: transparent;       
+}
 
 nav li {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  float: left;
-  background-color: #b47ce6;
+    margin: 0;
+    background-color: transparent;            
 }
 
 nav a {
-    color: pink
+    display: block;       
+    color: white;
+    text-align: center;
+    padding: 16px 24px;    
+    text-decoration: none;
+    font-family: "Segoe UI", sans-serif; 
+    transition: 0.3s;
+    background-color: transparent;
 }
 
 nav a:hover {
-  background-color: #634063;
+    background-color: #b47ce6; 
+    color: black;
 }
+
 
 #weekly_chart {
     float : left;
@@ -63,9 +63,142 @@ nav a:hover {
     max-width: 600px; 
     height: 400px;    
     margin: 0 auto;
-    border : 2px
+    border : 2px;
 }
 
 aside {
-    float: right
+  position: absolute; 
+  top: 200px;          
+  left: 900px;
+}
+
+h1 { 
+  text-align: center;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #444061;
+  text-align: center;
+}
+
+footer p {
+  background-color:#444061;
+  color: white
+}
+
+
+#overdue_list {
+  border: 3px solid black;
+  padding: 15px;
+  list-style-position: inside;
+  border-radius: 8px;
+  background-color: white;
+}
+
+
+
+#overdue_list h4, 
+#overdue_list p, 
+#overdue_list ul,
+#overdue_list li {
+    background-color: transparent; 
+    margin: 10px 0; 
+}
+
+dialog {
+  font-size: x-large;
+}
+
+#overdue_dialog.model {
+    width: 400px;
+    border: none;
+    border-radius: 15px;
+    padding: 30px;
+    background-color: white;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    text-align: center;
+}
+
+#overdue_dialog::before {
+    content: "OVERDUE SESSIONS";
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #4a3b5d;
+    margin-bottom: 10px;
+}
+
+#dialog_button {
+    background-color: #444061;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: 0.2s;
+}
+
+.dialog_text {
+  background-color: white;
+  display: block;
+  padding: 5px;  
+}
+
+.tables_container {
+  display: flex;
+  gap: 100px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.tables_wrapper {
+  min-width: 300px;
+}
+
+.column_header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.button_group {
+  position: relative;
+  display: inline-block;
+}
+
+#plus_button {
+
+    cursor: pointer;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #333;
+    background-color: white;
+
+}
+
+#Add_Session {
+    position: absolute; 
+    top: 40px;         
+    left: 0;      
+    z-index: 100;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
+
+
+.progress_bar {
+  
 }

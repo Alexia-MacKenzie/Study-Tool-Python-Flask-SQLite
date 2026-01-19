@@ -10,12 +10,14 @@
     <body> 
 
         <nav>
+        <ul>
         <li><a href="{{ url_for('home') }}">Home</a></li>
         <li><a href="{{ url_for('view') }}">View Sessions</a></li>
         <li><a href="{{ url_for('run') }}">Run Sessions</a></li>
+        </ul>
         </nav>
 
-        <h3>Focus Timer</h3>
+        <h1>Focus Timer</h1>
 
 
                     
@@ -33,9 +35,11 @@
                 <button type="submit">Finish Session</button>
             </form>
 
+            <div class="progress_bar">
             <label>Session Progress:</label>
             <progress id="session_bar" value="0" max="1"></progress>
             <span id="progress_text">0%</span>
+            </div>
     <script>
         const PROGRESS_URL = "{{ url_for('current_duration') }}";
     </script>
